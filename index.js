@@ -6,9 +6,23 @@
 */
 
 const apikey = WEATHER_API_KEY;
+const countries = document.querySelectorAll("path");
+
+
+countries.forEach(country =>{
+  country.addEventListener("click", function(){
+    countryClass = country.getAttribute('class');
+
+    if (countryClass === null) {
+      countryClass = country.getAttribute('name');
+    }
+    showWeather(countryClass); 
+  })
+})
+
 
 async function getWeather(city) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&&&appid=${apikey}`;
 
   const response = await fetch(url);
 
@@ -27,7 +41,5 @@ async function showWeather(city) {
     
     let weatherDataC = weatherDataKelvin - 273.15;
     weatherDataC = weatherDataC.toFixed(1);
-    console.log(weatherDataC);
+    console.log(`The weather of ${city} is ${weatherDataC}`);
 }
-
-showWeather("Kurdistan");

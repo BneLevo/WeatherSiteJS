@@ -59,13 +59,46 @@ async function showWeather(city) {
     let weatherData = await getWeather(city);
     // Recupération de meteo
     const weatherDataKelvin = weatherData["main"]["temp"];
-    
+
     // Kelvin à celcius
     let weatherDataC = weatherDataKelvin - 273.15;
     weatherDataC = weatherDataC.toFixed(1);
 
-    htmlCountry.textContent = city;
-    htmlDegree.textContent = weatherDataC;
+    //Récupération humidité
+    const humidityData = weatherData["main"]["humidity"];
 
-    
+    //Récuperation weather
+    const descData = weatherData["weather"]["0"]["description"];
+
+    //Récuperation emoji
+    const weatherIDData = weatherData["weather"]["0"]["id"];
+    let emoji = getWeatherEmoji(weatherIDData);
+
+    htmlCountry.textContent = city;
+    htmlDegree.textContent = weatherDataC + "°C";
+    htmlHumidity.textContent = "Humidity : " + humidityData + "%";
+    htmlWeather.textContent = descData;
+    htmlEmoji.textContent = emoji;
+}
+
+function getWeatherEmoji(weatherId){
+
+    switch(true){
+        case (weatherId >= 200 && weatherId < 300):
+            return "⛈";
+        case (weatherId >= 300 && weatherId < 400):
+            return "🌧";
+        case (weatherId >= 500 && weatherId < 600):
+            return "🌧";
+        case (weatherId >= 600 && weatherId < 700):
+            return "❄";
+        case (weatherId >= 700 && weatherId < 800):
+            return "🌫";
+        case (weatherId === 800):
+            return "☀";
+        case (weatherId >= 801 && weatherId < 810):
+            return "☁";
+        default:
+            return "❓";
+    }
 }

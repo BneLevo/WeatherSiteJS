@@ -79,6 +79,8 @@ async function showWeather(city) {
     htmlHumidity.textContent = "Humidity : " + humidityData + "%";
     htmlWeather.textContent = descData;
     htmlEmoji.textContent = emoji;
+
+    console.log(weatherData);
 }
 
 function getWeatherEmoji(weatherId){

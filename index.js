@@ -23,7 +23,7 @@ countries.forEach(country =>{
     if (countryClass === null) {
       countryClass = country.getAttribute('name');
     }
-    showWeather(countryClass); 
+    showWeather(countryClass);
     ShowSidePanel();
   })
 })
@@ -37,7 +37,6 @@ function HideSidePanel(){
 function ShowSidePanel(){
   
   sidePanel.style.transform = "translateX(0)"
-  sidePanel.style.backgroundColor = "red";
 
 }
 

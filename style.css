@@ -59,6 +59,11 @@ div#emoji{
     text-shadow: 0 0 5px rgba(201, 154, 255, 0.7);
 }
 
+p#lastUpdate{
+    margin-left: 0;
+    font-size: 0.7rem;
+}
+
 svg{
     width: 100%;
   height: 100%;

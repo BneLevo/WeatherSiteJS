@@ -13,6 +13,7 @@ const htmlDegree = document.querySelector("#degree");
 const htmlHumidity = document.querySelector("#humidity");
 const htmlWeather = document.querySelector("#weather");
 const htmlEmoji = document.querySelector("#emoji");
+const htmlLastUpdate = document.querySelector("#lastUpdate");
 const htmlButtonSearch = document.querySelector("#searchBar");
 
 
@@ -82,11 +83,18 @@ async function showWeather(city) {
     const weatherIDData = weatherData["weather"]["0"]["id"];
     let emoji = getWeatherEmoji(weatherIDData);
 
+    // Récuperation du temps
+    const timeStamp = weatherData["dt"];
+    // Timestamp to normal date
+    var fullDate = new Date(timeStamp * 1000);
+
+
     htmlCountry.textContent = city;
     htmlDegree.textContent = weatherDataC + "°C";
     htmlHumidity.textContent = "Humidity : " + humidityData + "%";
     htmlWeather.textContent = descData;
     htmlEmoji.textContent = emoji;
+    htmlLastUpdate.textContent = "Last updated:" + fullDate;
 
     console.log(weatherData);
 }

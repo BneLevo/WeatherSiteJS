@@ -14,6 +14,7 @@ const htmlHumidity = document.querySelector("#humidity");
 const htmlWeather = document.querySelector("#weather");
 const htmlEmoji = document.querySelector("#emoji");
 const htmlLastUpdate = document.querySelector("#lastUpdate");
+const htmlErrorMessage = document.querySelector("#error-message");
 const htmlButtonSearch = document.querySelector("#searchBar");
 
 
@@ -56,8 +57,10 @@ async function getWeather(city) {
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error("Couldn't get the weather");
+    showError("Couldn't get the weather");
   } else {
+    sidePanel.classList.remove("error-mode");
+    htmlErrorMessage.textContent =  "";
     return await response.json();
   }
 }
@@ -120,3 +123,12 @@ function getWeatherEmoji(weatherId){
             return "❓";
     }
 }
+
+function showError(message) {
+    const errorP = document.getElementById("error-message");
+    errorP.textContent = message;
+
+    document.getElementById("side-panel").classList.add("error-mode");
+}
+
+

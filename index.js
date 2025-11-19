@@ -13,6 +13,7 @@ const htmlDegree = document.querySelector("#degree");
 const htmlHumidity = document.querySelector("#humidity");
 const htmlWeather = document.querySelector("#weather");
 const htmlEmoji = document.querySelector("#emoji");
+const htmlButtonSearch = document.querySelector("#searchBar");
 
 
 countries.forEach(country =>{
@@ -21,12 +22,19 @@ countries.forEach(country =>{
     // S'il n'y a pas de classe, on récupère le name
     countryClass = country.getAttribute('class');
     if (countryClass === null) {
-      countryClass = country.getAttribute('name');
+      countryClass = country.getAttribute(  'name');
     }
     showWeather(countryClass);
     ShowSidePanel();
   })
 })
+
+// Récupere le texte puis affiche la météo entrée
+addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        showWeather(htmlButtonSearch.value);
+    }
+});
 
 function HideSidePanel(){
 

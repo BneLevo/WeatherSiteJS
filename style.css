@@ -126,3 +126,30 @@ input#searchBar:focus::placeholder{
     opacity: 0.3;
 }
 
+button {
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    padding: 8px 16px;
+    background-color: #443d4b;
+    color: #c99aff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(201, 154, 255, 0.3);
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #5c5264;
+    box-shadow: 0 0 12px rgba(201, 154, 255, 0.6);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+

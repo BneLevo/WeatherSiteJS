@@ -132,3 +132,109 @@ function showError(message) {
 }
 
 
+///////////////////////////////////////// Weather for user location /////////////////////////////////////////
+async function getWeatherByUserLocation(latitude, longitude) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        showError("Couldn't get the weather");
+    } else {
+        sidePanel.classList.remove("error-mode");
+        htmlErrorMessage.textContent =  "";
+        return await response.json();
+    }
+}
+
+function getLocationOfTheUser(){
+
+    if(navigator.geolocation){
+
+        navigator.geolocation.getCurrentPosition(
+            locationOK,
+            locationError,
+        );
+
+    }
+    else{
+        console.log("Your navigator geolocation is not supported");
+    }
+
+}
+
+function locationOK(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    console.log(latitude, longitude);
+
+
+    showWeatherByUserLocation(latitude, longitude);
+    ShowSidePanel();
+
+}
+
+function locationError(error) {
+    let message = "";
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            message = "User denied the request for Geolocation.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            message = "Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            message = "The request to get user location timed out.";
+            break;
+        default:
+            message = "An unknown error occurred.";
+            break;
+    }
+
+    console.error("Geolocation Error:", message);
+
+    document.getElementById("locationResult").innerHTML = "Location could not be retrieved: " + message;
+}
+
+async function showWeatherByUserLocation(latitude, longitude) {
+
+
+    let weatherData = await getWeatherByUserLocation(latitude, longitude);
+
+    // Recupération la ville
+    const city = weatherData["name"];
+
+    // Recupération de meteo
+    const weatherDataKelvin = weatherData["main"]["temp"];
+
+    // Kelvin à celcius
+    let weatherDataC = weatherDataKelvin - 273.15;
+    weatherDataC = weatherDataC.toFixed(1);
+
+    //Récupération humidité
+    const humidityData = weatherData["main"]["humidity"];
+
+    //Récuperation weather
+    const descData = weatherData["weather"]["0"]["description"];
+
+    //Récuperation emoji
+    const weatherIDData = weatherData["weather"]["0"]["id"];
+    let emoji = getWeatherEmoji(weatherIDData);
+
+    // Récuperation du temps
+    const timeStamp = weatherData["dt"];
+    // Timestamp to normal date
+    var fullDate = new Date(timeStamp * 1000);
+
+
+    htmlCountry.textContent = city;
+    htmlDegree.textContent = weatherDataC + "°C";
+    htmlHumidity.textContent = "Humidity : " + humidityData + "%";
+    htmlWeather.textContent = descData;
+    htmlEmoji.textContent = emoji;
+    htmlLastUpdate.textContent = "Last updated:" + fullDate;
+
+    console.log(weatherData);
+}
+

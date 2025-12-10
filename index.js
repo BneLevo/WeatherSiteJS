@@ -88,16 +88,19 @@ async function showWeather(city) {
 
     // Récuperation du temps
     const timeStamp = weatherData["dt"];
-    // Timestamp to normal date
-    var fullDate = new Date(timeStamp * 1000);
-
+    // Convert Unix timestamp (seconds) to a human-readable date and time string
+    // Using England locale, short date and medium time format. ex: 10/12/2025, 15:07:44
+    var date = new Date(timeStamp * 1000).toLocaleString("en-GB", {
+        dateStyle: "short",
+        timeStyle: "medium"
+    });
 
     htmlCountry.textContent = city;
     htmlDegree.textContent = weatherDataC + "°C";
     htmlHumidity.textContent = "Humidity : " + humidityData + "%";
     htmlWeather.textContent = descData;
     htmlEmoji.textContent = emoji;
-    htmlLastUpdate.textContent = "Last updated:" + fullDate;
+    htmlLastUpdate.textContent = "Last updated: " + date;
 
     console.log(weatherData);
 }
@@ -224,8 +227,12 @@ async function showWeatherByUserLocation(latitude, longitude) {
 
     // Récuperation du temps
     const timeStamp = weatherData["dt"];
-    // Timestamp to normal date
-    var fullDate = new Date(timeStamp * 1000);
+    // Convert Unix timestamp (seconds) to a human-readable date and time string
+    // Using England locale, short date and medium time format. ex: 10/12/2025, 15:07:44
+    var date = new Date(timeStamp * 1000).toLocaleString("en-GB", {
+        dateStyle: "short",
+        timeStyle: "medium"
+    });
 
 
     htmlCountry.textContent = city;
@@ -233,7 +240,7 @@ async function showWeatherByUserLocation(latitude, longitude) {
     htmlHumidity.textContent = "Humidity : " + humidityData + "%";
     htmlWeather.textContent = descData;
     htmlEmoji.textContent = emoji;
-    htmlLastUpdate.textContent = "Last updated:" + fullDate;
+    htmlLastUpdate.textContent = "Last updated:" + date;
 
     console.log(weatherData);
 }

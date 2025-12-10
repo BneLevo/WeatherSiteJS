@@ -138,16 +138,17 @@ input#searchBar::placeholder{
 }
 
 input#searchBar:hover{
-    background-color: #4e4656;
+    background-color: var(--input-bg);
 }
 
 input#searchBar:focus{
-    background-color: #554d63;
+    background-color: var(--input-bg);
     border-color: var(--text-color);
     box-shadow: 0 0 10px rgba(201, 154, 255, 0.6);
 }
 
 input#searchBar:focus::placeholder{
+    color: var(--text-color);
     opacity: 0.3;
 }
 
@@ -168,7 +169,7 @@ button {
 }
 
 button:hover {
-    background-color: #5c5264;
+    background-color: var(--button-bg);
     box-shadow: 0 0 12px rgba(201, 154, 255, 0.6);
     transform: scale(1.05);
 }

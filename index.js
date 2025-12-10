@@ -40,7 +40,7 @@ addEventListener('keydown', function (e) {
 
 function HideSidePanel(){
 
-  sidePanel.style.transform = "translateX(-400px)"
+  sidePanel.style.transform = "translateX(-1000px)"
   
 }
 

@@ -1,15 +1,40 @@
+/* Dark mode (default) */
+:root {
+
+    --bg-color: #151218;
+    --panel-bg: rgba(255, 255, 255, 0.1);
+    --text-color: #c99aff;
+    --map-color: #443d4b;
+    --map-hover: #c99aff;
+    --input-bg: #443d4b;
+    --button-bg: #443d4b;
+    --button-text: #c99aff;
+
+}
+
+.light-mode {
+    --bg-color: #f5f2ff;
+    --panel-bg: rgba(0, 0, 0, 0.05);
+    --text-color: #3a2f52;
+    --map-color: #a89cc5;
+    --map-hover: #7b62d9;
+    --input-bg: #e4dcf5;
+    --button-bg: #d6c6ff;
+    --button-text: #3a2f52;
+}
+
 body{
-    background-color: #151218;
+    background-color: var(--bg-color);
 }
 
 #side-panel{
   position: absolute;
   padding: 2em;
-    background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--panel-bg);
     backdrop-filter: blur(30px);
   height: 39%;
   transition: 0.5s ease;
-  transform: translateX(-400px);
+  transform: translateX(-1000px);
     border-radius: 0 100px 100px 0;
 }
 
@@ -20,7 +45,7 @@ div{
 }
 
 div h2,p{
-    color: #c99aff;
+    color: var(--text-color);
 }
 
 p{
@@ -81,14 +106,14 @@ svg{
 }
 
 svg path {
-  fill: #443d4b;
+  fill: var(--map-color);
   cursor: pointer;
   transition: fill 0.2s;
 }
 
 svg path:hover {
   transition-delay: 100ms;
-  fill: #c99aff;
+  fill: var(--map-hover);
 }
 
 input#searchBar{
@@ -98,10 +123,10 @@ input#searchBar{
     right: 0;
     padding: 0 15px;
     width: 230px;
-    background-color: #443d4b;
+    background-color: var(--input-bg);
     border: 2px solid transparent;
     border-radius: 12px;
-    color: #e9d8ff;
+    color: var(--text-color);
     font-size: 1rem;
     outline: none;
     transition: 0.25s ease;
@@ -118,7 +143,7 @@ input#searchBar:hover{
 
 input#searchBar:focus{
     background-color: #554d63;
-    border-color: #c99aff;
+    border-color: var(--text-color);
     box-shadow: 0 0 10px rgba(201, 154, 255, 0.6);
 }
 
@@ -131,8 +156,8 @@ button {
     top: 70px;
     right: 70px;
     padding: 8px 16px;
-    background-color: #443d4b;
-    color: #c99aff;
+    background-color: var(--button-bg);
+    color: var(--button-text);
     border: none;
     border-radius: 8px;
     font-weight: bold;
@@ -151,5 +176,27 @@ button:hover {
 button:active {
     transform: scale(0.98);
 }
+
+#themeToggle {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 9999;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 12px 14px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px rgba(201, 154, 255, 0.3);
+}
+
+#themeToggle:hover {
+    background: var(--map-hover);
+    transform: scale(1.05);
+}
+
 
 

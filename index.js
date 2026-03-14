@@ -46,6 +46,38 @@ function ShowSidePanel(){
 }
 
 
+function parseWeatherData(weatherData) {
+    const city = weatherData.name;
+    const temp = (weatherData.main.temp - 273.15).toFixed(1);
+    const humidity = weatherData.main.humidity;
+    const description = weatherData.weather[0].description;
+    const emoji = getWeatherEmoji(weatherData.weather[0].id);
+    const date = new Date(weatherData.dt * 1000).toLocaleString("en-GB", {
+        dateStyle: "short",
+        timeStyle: "medium"
+    });
+    
+    return { city, temp, humidity, description, emoji, date };
+}
+
+function updateWeatherPanel(data){
+
+    htmlCountry.textContent = data.city;
+    htmlDegree.textContent = data.temp + "°C";
+    htmlHumidity.textContent = "Humidity : " + data.humidity + "%";
+    htmlWeather.textContent = data.description;
+    htmlEmoji.textContent = data.emoji;
+    htmlLastUpdate.textContent = "Last updated: " + data.date;
+
+}
+
+async function showWeather(city) {
+    const weatherData = await getWeather(city);
+    const parsedData = parseWeatherData(weatherData);
+    updateWeatherPanel(parsedData);
+    ShowSidePanel();
+}
+
 async function getWeather(city) {
   const url = `${BASE_URL}?q=${city}&appid=${apikey}`;
 
@@ -58,39 +90,6 @@ async function getWeather(city) {
     htmlErrorMessage.textContent =  "";
     return await response.json();
   }
-}
-
-async function showWeather(city) {
-  
-  
-    let weatherData = await getWeather(city);
-    // Recupération de meteo
-    const weatherDataKelvin = weatherData["main"]["temp"];
-
-    // Kelvin à celcius
-    let weatherDataC = weatherDataKelvin - 273.15;
-    weatherDataC = weatherDataC.toFixed(1);
-
-    //Récupération humidité
-    const humidityData = weatherData["main"]["humidity"];
-
-    //Récuperation weather
-    const descData = weatherData["weather"]["0"]["description"];
-
-    //Récuperation emoji
-    const weatherIDData = weatherData["weather"]["0"]["id"];
-    let emoji = getWeatherEmoji(weatherIDData);
-
-    // Récuperation du temps
-    const timeStamp = weatherData["dt"];
-    // Convert Unix timestamp (seconds) to a human-readable date and time string
-    // Using England locale, short date and medium time format. ex: 10/12/2025, 15:07:44
-    var date = new Date(timeStamp * 1000).toLocaleString("en-GB", {
-        dateStyle: "short",
-        timeStyle: "medium"
-    });
-
-    updateWeatherPanel({city, weatherDataC, humidityData, descData, emoji, date});
 }
 
 function getWeatherEmoji(weatherId){
@@ -124,6 +123,13 @@ function showError(message) {
 
 
 ///////////////////////////////////////// Weather for user location /////////////////////////////////////////
+async function showWeatherByUserLocation(lat, lon) {
+    const weatherData = await getWeatherByUserLocation(lat, lon);
+    const parsedData = parseWeatherData(weatherData);
+    updateWeatherPanel(parsedData);
+    ShowSidePanel();
+}
+
 async function getWeatherByUserLocation(latitude, longitude) {
     const url = `${BASE_URL}?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
 
@@ -187,54 +193,4 @@ function locationError(error) {
 
     document.getElementById("locationResult").innerHTML = "Location could not be retrieved: " + message;
 }
-
-async function showWeatherByUserLocation(latitude, longitude) {
-
-
-    let weatherData = await getWeatherByUserLocation(latitude, longitude);
-
-    // Recupération la ville
-    const city = weatherData["name"];
-
-    // Recupération de meteo
-    const weatherDataKelvin = weatherData["main"]["temp"];
-
-    // Kelvin à celcius
-    let weatherDataC = weatherDataKelvin - 273.15;
-    weatherDataC = weatherDataC.toFixed(1);
-
-    //Récupération humidité
-    const humidityData = weatherData["main"]["humidity"];
-
-    //Récuperation weather
-    const descData = weatherData["weather"]["0"]["description"];
-
-    //Récuperation emoji
-    const weatherIDData = weatherData["weather"]["0"]["id"];
-    let emoji = getWeatherEmoji(weatherIDData);
-
-    // Récuperation du temps
-    const timeStamp = weatherData["dt"];
-    // Convert Unix timestamp (seconds) to a human-readable date and time string
-    // Using England locale, short date and medium time format. ex: 10/12/2025, 15:07:44
-    var date = new Date(timeStamp * 1000).toLocaleString("en-GB", {
-        dateStyle: "short",
-        timeStyle: "medium"
-    });
-
-
-    updateWeatherPanel({city, weatherDataC, humidityData, descData, emoji, date});
-}
-
-function updateWeatherPanel(data){
-
-    htmlCountry.textContent = data.city;
-    htmlDegree.textContent = data.temp + "°C";
-    htmlHumidity.textContent = "Humidity : " + data.humidity + "%";
-    htmlWeather.textContent = data.description;
-    htmlEmoji.textContent = data.emoji;
-    htmlLastUpdate.textContent = "Last updated: " + data.date;
-
-}
-
 

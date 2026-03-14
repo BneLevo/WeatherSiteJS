@@ -1,9 +1,4 @@
-/*
-    JSON
-    Object --> {}
-    Array  --> []
-    value  --> :
-*/
+const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 const apikey = WEATHER_API_KEY;
 const countries = document.querySelectorAll("path");
@@ -52,7 +47,7 @@ function ShowSidePanel(){
 
 
 async function getWeather(city) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
+  const url = `${BASE_URL}?q=${city}&appid=${apikey}`;
 
   const response = await fetch(url);
 
@@ -137,7 +132,7 @@ function showError(message) {
 
 ///////////////////////////////////////// Weather for user location /////////////////////////////////////////
 async function getWeatherByUserLocation(latitude, longitude) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
+    const url = `${BASE_URL}?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
 
     const response = await fetch(url);
 

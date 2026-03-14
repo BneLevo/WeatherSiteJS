@@ -90,14 +90,7 @@ async function showWeather(city) {
         timeStyle: "medium"
     });
 
-    htmlCountry.textContent = city;
-    htmlDegree.textContent = weatherDataC + "°C";
-    htmlHumidity.textContent = "Humidity : " + humidityData + "%";
-    htmlWeather.textContent = descData;
-    htmlEmoji.textContent = emoji;
-    htmlLastUpdate.textContent = "Last updated: " + date;
-
-    console.log(weatherData);
+    updateWeatherPanel({city, weatherDataC, humidityData, descData, emoji, date});
 }
 
 function getWeatherEmoji(weatherId){
@@ -230,13 +223,18 @@ async function showWeatherByUserLocation(latitude, longitude) {
     });
 
 
-    htmlCountry.textContent = city;
-    htmlDegree.textContent = weatherDataC + "°C";
-    htmlHumidity.textContent = "Humidity : " + humidityData + "%";
-    htmlWeather.textContent = descData;
-    htmlEmoji.textContent = emoji;
-    htmlLastUpdate.textContent = "Last updated:" + date;
-
-    console.log(weatherData);
+    updateWeatherPanel({city, weatherDataC, humidityData, descData, emoji, date});
 }
+
+function updateWeatherPanel(data){
+
+    htmlCountry.textContent = data.city;
+    htmlDegree.textContent = data.temp + "°C";
+    htmlHumidity.textContent = "Humidity : " + data.humidity + "%";
+    htmlWeather.textContent = data.description;
+    htmlEmoji.textContent = data.emoji;
+    htmlLastUpdate.textContent = "Last updated: " + data.date;
+
+}
+
 
